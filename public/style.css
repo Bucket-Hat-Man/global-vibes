@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.mood-selection {
+    margin: 20px 0;
+}
+
+.mood-btn {
+    font-size: 40px;
+    margin: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.stats, .continent-stats, .previous-stats {
+    margin-top: 30px;
+}
+
+#global-stats, #continent-stats, #previous-day-stats {
+    font-size: 20px;
+}
