@@ -1,97 +1,50 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const moodButtons = document.querySelectorAll('.mood-btn');
-
-    // Add event listener for each mood button
-    moodButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const mood = button.getAttribute('data-mood');
-            submitMood(mood);
+document.addEventListener('DOMContentLoaded', function () {
+    // Fetch global mood statistics
+    function fetchGlobalStats() {
+      fetch('/globalStats')
+        .then((response) => response.json())
+        .then((data) => {
+          // Update your frontend with the stats
+          document.getElementById('global-mood').innerText = `Happy: ${data.happy}%`;
+          // Handle the other moods similarly
+        })
+        .catch((error) => {
+          console.error('Error fetching global stats:', error);
         });
-    });
-
-    // Fetch stats when the page loads
+    }
+  
+    // Fetch continent-based mood stats
+    function fetchContinentStats() {
+      fetch('/continent')
+        .then((response) => response.json())
+        .then((data) => {
+          // Update your frontend with the continent stats
+          const continent = data.continent || 'Unknown';
+          document.getElementById('continent-mood').innerText = `Continent: ${continent}`;
+        })
+        .catch((error) => {
+          console.error('Error fetching continent stats:', error);
+        });
+    }
+  
+    // Call the fetch functions when the page loads
     fetchGlobalStats();
     fetchContinentStats();
-    fetchPreviousDayStats();
-});
-
-// Function to submit mood to the backend
-function submitMood(mood) {
-    fetch('/submitMood', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ mood: mood })
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert('Your mood has been recorded!');
-        fetchGlobalStats(); // Update global stats after submission
-        fetchContinentStats(); // Update continent stats after submission
-    })
-    .catch(error => {
-        console.error('Error:', error);
+  
+    // Event listeners for mood buttons
+    document.querySelectorAll('.mood-button').forEach((button) => {
+      button.addEventListener('click', function () {
+        const mood = this.getAttribute('data-mood');
+        fetch(`/submitMood?mood=${mood}`, { method: 'POST' })
+          .then((response) => response.json())
+          .then((data) => {
+            alert(`Your mood was recorded as ${mood}`);
+            fetchGlobalStats(); // Update stats after submission
+          })
+          .catch((error) => {
+            console.error('Error submitting mood:', error);
+          });
+      });
     });
-}
-
-// Function to fetch global mood stats
-function fetchGlobalStats() {
-    fetch('/globalStats')
-        .then(response => response.json())
-        .then(data => {
-            const statsElement = document.getElementById('global-stats');
-            const totalResponses = data.total;
-
-            if (totalResponses > 0) {
-                statsElement.textContent = `
-                    Total Responses: ${totalResponses}
-                    😊 Happy: ${(data.happy || 0)}% (${data.happyVotes || 0} votes),
-                    😢 Sad: ${(data.sad || 0)}% (${data.sadVotes || 0} votes),
-                    🤩 Excited: ${(data.excited || 0)}% (${data.excitedVotes || 0} votes),
-                    😠 Angry: ${(data.angry || 0)}% (${data.angryVotes || 0} votes)
-                `;
-            } else {
-                statsElement.textContent = "No responses yet!";
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
-
-// Function to fetch mood stats by continent
-function fetchContinentStats() {
-    fetch('/continentStats')
-        .then(response => response.json())
-        .then(data => {
-            const statsElement = document.getElementById('continent-stats');
-            const formattedData = Object.keys(data).map(continent => {
-                const continentData = data[continent];
-                return `${continent}: Happy: ${continentData.happy}, Sad: ${continentData.sad}, Excited: ${continentData.excited}, Angry: ${continentData.angry}, Total: ${continentData.total}`;
-            }).join("<br>");
-
-            statsElement.innerHTML = formattedData;
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
-
-// Function to fetch previous day's mood stats
-function fetchPreviousDayStats() {
-    fetch('/previousDayStats')
-        .then(response => response.json())
-        .then(data => {
-            const previousStatsElement = document.getElementById('previous-day-stats');
-            const formattedData = Object.keys(data).map(continent => {
-                const continentData = data[continent];
-                return `${continent}: Happy: ${continentData.happy}, Sad: ${continentData.sad}, Excited: ${continentData.excited}, Angry: ${continentData.angry}, Total: ${continentData.total}`;
-            }).join("<br>");
-
-            previousStatsElement.innerHTML = formattedData;
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-}
+  });
+  

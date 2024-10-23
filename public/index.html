@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoodChecker.io</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoodChecker</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>How are you feeling today?</h1>
-        <div class="mood-selection">
-            <button class="mood-btn" data-mood="happy">😊</button>
-            <button class="mood-btn" data-mood="sad">😢</button>
-            <button class="mood-btn" data-mood="excited">🤩</button>
-            <button class="mood-btn" data-mood="angry">😠</button>
-        </div>
-        <div class="stats">
-            <h2>Global Mood Statistics</h2>
-            <p id="global-stats">Loading...</p>
-        </div>
-        <div class="continent-stats">
-            <h2>Mood Statistics by Continent</h2>
-            <p id="continent-stats">Loading...</p>
-        </div>
-    </div>
-    <script src="app.js"></script>
+  <h1>How are you feeling today?</h1>
+
+  <div class="mood-buttons">
+    <button class="mood-button" data-mood="happy">😊</button>
+    <button class="mood-button" data-mood="sad">😢</button>
+    <button class="mood-button" data-mood="excited">😍</button>
+    <button class="mood-button" data-mood="angry">😡</button>
+  </div>
+
+  <h2>Global Mood Statistics</h2>
+  <div id="global-mood">Loading...</div>
+
+  <h2>Mood Statistics by Continent</h2>
+  <div id="continent-mood">Loading...</div>
+
+  <script src="app.js"></script>
 </body>
 </html>
