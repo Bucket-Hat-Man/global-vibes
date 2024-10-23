@@ -27,6 +27,9 @@ let moodData = {
     trendData: {} // Store rolling averages for trend tracking
 };
 
+// Variable to store previous day's stats
+let previousDayStats = { ...moodData };
+
 // Store rolling mood data for each continent over the past 30 days
 let rollingMoodData = {
     Africa: [], Asia: [], Europe: [], NorthAmerica: [], SouthAmerica: [], Oceania: []
@@ -153,6 +156,10 @@ app.get('/continentStats', (req, res) => {
   res.json(continentStats);
 });
 
+// New route for previous day stats
+app.get('/previousDayStats', (req, res) => {
+    res.json(previousDayStats);
+});
 
 // Reset stats at midnight GMT
 cron.schedule('0 0 * * *', () => {
