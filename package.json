@@ -1,18 +1,29 @@
 {
   "name": "moodchecker",
   "version": "1.0.0",
+  "description": "A simple mood tracking app",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",   
+    "build": ""                  
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
-    "axios": "^1.7.7",
-    "express": "^4.21.1",
-    "node-cron": "^3.0.3"
-  }
+    "axios": "^0.21.1",          
+    "express": "^4.17.1"         
+  },
+  "engines": {
+    "node": ">=14.x"             
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bucket-Hat-Man/global-vibes.git" 
+  },
+  "keywords": [
+    "mood",
+    "tracker",
+    "express",
+    "node"
+  ],
+  "author": "BucketHatMan",
+  "license": "MIT"
 }
